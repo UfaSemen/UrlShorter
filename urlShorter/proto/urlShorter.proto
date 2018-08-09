@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+service urlShorter {
+	rpc GetShort(ShortRequest) returns (ShortResponse) {};
+	rpc GetFull(FullRequest) returns (FullResponse) {};
+}
+
+message ShortRequest {
+	string url = 1;
+}
+
+message ShortResponse {
+	string url = 2;
+}
+
+message FullRequest {
+	string url = 3;
+}
+
+message FullResponse {
+	string url = 4;
+}
