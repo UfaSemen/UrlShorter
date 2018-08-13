@@ -1,6 +1,7 @@
-package main
+package converter
 
 import (
+	"URLShorter/URLShorter/repository"
 	"fmt"
 	"math/rand"
 	"strings"
@@ -29,12 +30,12 @@ var tests = []testpair{
 }
 
 func TestGetFullLoc(t *testing.T) {
-	rep, err := makeRepos()
+	rep, err := repository.MakeRepos()
 	if err != nil {
-		fmt.Println("error in makeRepos", err)
+		fmt.Println("error in repository.MakeRepos", err)
 	}
 	defer rep.Close()
-	us := makeURLShorter(rep)
+	us := MakeURLShorter(rep)
 	for _, pair := range tests {
 		v := us.getFullLoc(pair.url)
 		if v != pair.result {
@@ -48,12 +49,12 @@ func TestGetFullLoc(t *testing.T) {
 }
 
 func TestGetExistingShortLoc(t *testing.T) {
-	rep, err := makeRepos()
+	rep, err := repository.MakeRepos()
 	if err != nil {
-		fmt.Println("error in makeRepos", err)
+		fmt.Println("error in repository.MakeRepos", err)
 	}
 	defer rep.Close()
-	us := makeURLShorter(rep)
+	us := MakeURLShorter(rep)
 	v := us.getShortLoc("bash.im")
 	if v != "myURLShorter.com/q" {
 		t.Error(
@@ -63,12 +64,12 @@ func TestGetExistingShortLoc(t *testing.T) {
 }
 
 func TestGetNewShortLoc(t *testing.T) {
-	rep, err := makeRepos()
+	rep, err := repository.MakeRepos()
 	if err != nil {
-		fmt.Println("error in makeRepos", err)
+		fmt.Println("error in repository.MakeRepos", err)
 	}
 	defer rep.Close()
-	us := makeURLShorter(rep)
+	us := MakeURLShorter(rep)
 	v := us.getShortLoc(RandStringBytes(25))
 	if !strings.HasPrefix(v, "myURLShorter.com") {
 		t.Error(
@@ -79,12 +80,12 @@ func TestGetNewShortLoc(t *testing.T) {
 
 //BenchmarkGetNewShort - benchark test
 func BenchmarkGetNewShort(b *testing.B) {
-	rep, err := makeRepos()
+	rep, err := repository.MakeRepos()
 	if err != nil {
-		fmt.Println("error in makeRepos", err)
+		fmt.Println("error in repository.MakeRepos", err)
 	}
 	defer rep.Close()
-	us := makeURLShorter(rep)
+	us := MakeURLShorter(rep)
 	for n := 0; n < b.N; n++ {
 		us.getShortLoc(RandStringBytes(10))
 	}
@@ -92,50 +93,38 @@ func BenchmarkGetNewShort(b *testing.B) {
 
 //BenchmarkGetExistingShort - benchark test
 func BenchmarkGetExistingShort(b *testing.B) {
-	rep, err := makeRepos()
+	rep, err := repository.MakeRepos()
 	if err != nil {
-		fmt.Println("error in makeRepos", err)
+		fmt.Println("error in repository.MakeRepos", err)
 	}
 	defer rep.Close()
-	us := makeURLShorter(rep)
+	us := MakeURLShorter(rep)
 	for n := 0; n < b.N; n++ {
-		us.getShortLoc("https://www.youtube.com/")
+		us.getShortLoc("8e/bz3jC89")
 	}
 }
 
 //BenchmarkGetExistingLong - benchark test
 func BenchmarkGetExistingLong(b *testing.B) {
-	rep, err := makeRepos()
+	rep, err := repository.MakeRepos()
 	if err != nil {
-		fmt.Println("error in makeRepos", err)
+		fmt.Println("error in repository.MakeRepos", err)
 	}
 	defer rep.Close()
-	us := makeURLShorter(rep)
+	us := MakeURLShorter(rep)
 	for n := 0; n < b.N; n++ {
 		us.getShortLoc("myURLShorter.com/p")
 	}
 }
 
 func BenchmarkGenerateShortURL(b *testing.B) {
-	rep, err := makeRepos()
+	rep, err := repository.MakeRepos()
 	if err != nil {
-		fmt.Println("error in makeRepos", err)
+		fmt.Println("error in repository.MakeRepos", err)
 	}
 	defer rep.Close()
-	us := makeURLShorter(rep)
+	us := MakeURLShorter(rep)
 	for n := 0; n < b.N; n++ {
 		us.generateShortURL()
-	}
-}
-
-func BenchmarkGetMaxID(b *testing.B) {
-	rep, err := makeRepos()
-	if err != nil {
-		fmt.Println("error in makeRepos", err)
-	}
-	defer rep.Close()
-	us := makeURLShorter(rep)
-	for n := 0; n < b.N; n++ {
-		us.rep.GetMaxID()
 	}
 }
