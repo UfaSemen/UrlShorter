@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"math/rand"
 
 	proto "urlShorter/urlShorter/proto"
 
@@ -12,6 +13,16 @@ import (
 type test struct {
 	option int
 	url    string
+}
+
+const letterBytes = "./abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+func randStringBytes(n int) string {
+	b := make([]byte, n)
+	for i := range b {
+		b[i] = letterBytes[rand.Intn(len(letterBytes))]
+	}
+	return string(b)
 }
 
 func main() {
@@ -25,7 +36,7 @@ func main() {
 		{2, "myURLShorter.com/q"},
 		{1, "https://www.youtube.com/"},
 		{2, "bash.im"},
-		{1, "https://www.gismeteo.ru/weather-sankt-peterburg-4079/month/"},
+		{1, randStringBytes(10)},
 		{2, "myURLShorter.com/qqq"},
 		{1, "bash.im"},
 		{2, "myURLShorter.com/s"},
@@ -35,13 +46,13 @@ func main() {
 		if t.option == 1 {
 			rsp, err := urlShorter.GetShort(context.TODO(), &proto.ShortRequest{Url: t.url})
 			if err != nil {
-				fmt.Println(err)
+				fmt.Println("GetShort", err)
 			}
 			fmt.Println(rsp.Url)
 		} else if t.option == 2 {
-			rsp2, err2 := urlShorter.GetFull(context.TODO(), &proto.FullRequest{Url: t.url})
-			if err2 != nil {
-				fmt.Println(err2)
+			rsp2, err := urlShorter.GetFull(context.TODO(), &proto.FullRequest{Url: t.url})
+			if err != nil {
+				fmt.Println("GetFull", err)
 			}
 			fmt.Println(rsp2.Url)
 		}
