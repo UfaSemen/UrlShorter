@@ -1,11 +1,12 @@
 package main
 
 import (
-	"URLShorter/URLShorter/converter"
-	"URLShorter/URLShorter/repository"
 	"fmt"
 
-	proto "URLShorter/URLShorter/proto"
+	"github.com/UfaSemen/urlShorter/urlShorter/converter"
+	"github.com/UfaSemen/urlShorter/urlShorter/repository"
+
+	proto "github.com/UfaSemen/urlShorter/urlShorter/proto"
 
 	micro "github.com/micro/go-micro"
 )

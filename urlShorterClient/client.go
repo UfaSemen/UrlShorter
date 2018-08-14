@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 
-	proto "urlShorter/urlShorter/proto"
+	proto "github.com/UfaSemen/urlShorter/urlShorter/proto"
 
 	micro "github.com/micro/go-micro"
 )

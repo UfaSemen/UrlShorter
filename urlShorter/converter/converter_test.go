@@ -1,11 +1,12 @@
 package converter
 
 import (
-	"URLShorter/URLShorter/repository"
 	"fmt"
 	"math/rand"
 	"strings"
 	"testing"
+
+	"github.com/UfaSemen/urlShorter/urlShorter/repository"
 )
 
 const letterBytes = "./abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"

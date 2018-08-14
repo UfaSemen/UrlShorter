@@ -1,11 +1,12 @@
 package converter
 
 import (
-	proto "URLShorter/URLShorter/proto"
-	"URLShorter/URLShorter/repository"
 	"context"
 	"fmt"
 	"strings"
+
+	proto "github.com/UfaSemen/urlShorter/urlShorter/proto"
+	"github.com/UfaSemen/urlShorter/urlShorter/repository"
 )
 
 const (
